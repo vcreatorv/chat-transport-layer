@@ -1,0 +1,23 @@
+http:
+  host: "0.0.0.0"
+  port: "8090"
+  readTimeout: "5s"
+  writeTimeout: "5s"
+  maxHeaderBytes: 1048576
+
+kafka:
+  producer:
+    brokers: ["172.20.10.6:29093"]
+    topic: "forum-topic"
+    requiredAcks: -1
+    retryMax: 5
+    returnSuccess: true
+  consumer:
+    brokers: ["172.20.10.6:29093"]
+    topic: "forum-topic"
+    autoOffsetReset: "newest"
+    returnErrors: true
+
+segment:
+  maxSegmentSize: 100
+  assemblyPeriod: "2s"
