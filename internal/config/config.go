@@ -26,7 +26,7 @@ type KafkaProducerConfig struct {
 type KafkaConsumerConfig struct {
 	Brokers         []string `yaml:"brokers"`
 	Topic           string   `yaml:"topic"`
-	AutoOffsetReset string   `yaml:"autoOffsetReset"`
+	AutoOffsetReset int      `yaml:"autoOffsetReset"`
 	ReturnErrors    bool     `yaml:"returnErrors"`
 }
 

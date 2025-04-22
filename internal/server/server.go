@@ -2,6 +2,7 @@ package server
 
 import (
 	"TransportLayer/internal/config"
+	"TransportLayer/internal/middleware"
 	"context"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -29,6 +30,14 @@ func NewServer(cfg *config.Config) *Server {
 
 func (s *Server) Run() error {
 	return s.httpServer.ListenAndServe()
+}
+
+func (s *Server) SetupRoutes(routeConfig func(*mux.Router)) {
+	apiRouter := s.mux.PathPrefix("/api").Subrouter()
+	routeConfig(apiRouter)
+
+	apiRouter.Use(middleware.RecoveryMiddleware)
+	s.httpServer.Handler = apiRouter
 }
 
 func (s *Server) GracefulStop() error {

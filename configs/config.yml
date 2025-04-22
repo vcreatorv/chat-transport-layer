@@ -7,15 +7,15 @@ http:
 
 kafka:
   producer:
-    brokers: ["172.20.10.6:29093"]
-    topic: "forum-topic"
+    brokers: ["localhost:29092"]
+    topic: "segmentation"
     requiredAcks: -1
     retryMax: 5
     returnSuccess: true
   consumer:
-    brokers: ["172.20.10.6:29093"]
-    topic: "forum-topic"
-    autoOffsetReset: "newest"
+    brokers: ["localhost:29092"]
+    topic: "segmentation"
+    autoOffsetReset: -1
     returnErrors: true
 
 segment:
