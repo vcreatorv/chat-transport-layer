@@ -5,15 +5,19 @@ http:
   writeTimeout: "5s"
   maxHeaderBytes: 1048576
 
+httpClient:
+  codeURL: "http://localhost:8000/api/code"
+  receiveURL: "http://localhost:3000/api/receive"
+
 kafka:
   producer:
-    brokers: ["localhost:29092"]
+    brokers: [ "localhost:29092" ]
     topic: "segmentation"
     requiredAcks: -1
     retryMax: 5
     returnSuccess: true
   consumer:
-    brokers: ["localhost:29092"]
+    brokers: [ "localhost:29092" ]
     topic: "segmentation"
     autoOffsetReset: -1
     returnErrors: true

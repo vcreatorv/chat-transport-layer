@@ -45,7 +45,7 @@ func (h *MessageHandler) HandleSend(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, segment := range segments {
-		go utils.SendSegment(segment)
+		go utils.CodeSegment(segment)
 		fmt.Printf("сегмент отправился: %+v\n", segment)
 	}
 }

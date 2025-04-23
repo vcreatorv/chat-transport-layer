@@ -3,6 +3,7 @@ package kafka
 import (
 	"TransportLayer/internal/config"
 	"TransportLayer/internal/entity"
+	"TransportLayer/internal/usecase"
 	"encoding/json"
 	"fmt"
 	"github.com/IBM/sarama"
@@ -11,9 +12,10 @@ import (
 type Consumer struct {
 	consumer sarama.Consumer
 	cfg      config.KafkaConsumerConfig
+	msgUC    usecase.MessageService
 }
 
-func NewConsumer(cfg config.KafkaConsumerConfig) (*Consumer, error) {
+func NewConsumer(cfg config.KafkaConsumerConfig, msgUC usecase.MessageService) (*Consumer, error) {
 	saramaConfig := sarama.NewConfig()
 	saramaConfig.Consumer.Return.Errors = cfg.ReturnErrors
 
@@ -25,6 +27,7 @@ func NewConsumer(cfg config.KafkaConsumerConfig) (*Consumer, error) {
 	return &Consumer{
 		consumer: consumer,
 		cfg:      cfg,
+		msgUC:    msgUC,
 	}, nil
 }
 
@@ -41,8 +44,14 @@ func (c *Consumer) ReadFromKafka() error {
 			var segment entity.Segment
 			if err := json.Unmarshal(msg.Value, &segment); err != nil {
 				fmt.Printf("ошибка при десериализации сообщения из consumer: %v", err)
+				continue
 			}
-			fmt.Printf("%+v\n", segment)
+			fmt.Printf("получен сегмент %d/%d: %s\n",
+				segment.SegmentNumber,
+				segment.TotalSegments,
+				segment.SegmentPayload)
+
+			c.msgUC.AddSegment(&segment)
 		case err := <-partitionConsumer.Errors():
 			fmt.Printf("ошибка при чтении из consumer: %s\n", err.Error())
 		}

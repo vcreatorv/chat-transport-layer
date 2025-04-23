@@ -35,10 +35,10 @@ func main() {
 		fmt.Printf("Останавливаем сервер. Пришел сигнал: %v\n", sig)
 
 		if err := kafkaProducer.Close(); err != nil {
-			log.Fatalf("Не удалось остановить кафка продюсера: %v\n", err)
+			log.Fatalf("Не удалось остановить kafka producer: %v\n", err)
 		}
 		if err := kafkaConsumer.Close(); err != nil {
-			log.Fatalf("Не удалось остановить кафка консюмера: %v\n", err)
+			log.Fatalf("Не удалось остановить kafka consumer: %v\n", err)
 		}
 
 		if err := srv.GracefulStop(); err != nil {

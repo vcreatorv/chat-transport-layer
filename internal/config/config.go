@@ -15,6 +15,11 @@ type HTTPConfig struct {
 	MaxHeaderBytes int           `yaml:"maxHeaderBytes"`
 }
 
+type HTTPClientURL struct {
+	CodeURL    string `yaml:"codeURL"`
+	ReceiveURL string `yaml:"receiveURL"`
+}
+
 type KafkaProducerConfig struct {
 	Brokers       []string `yaml:"brokers"`
 	Topic         string   `yaml:"topic"`
@@ -41,9 +46,10 @@ type SegmentConfig struct {
 }
 
 type Config struct {
-	HTTP    HTTPConfig    `yaml:"http"`
-	Kafka   KafkaConfig   `yaml:"kafka"`
-	Segment SegmentConfig `yaml:"segment"`
+	HTTP       HTTPConfig    `yaml:"http"`
+	HTTPClient HTTPClientURL `yaml:"httpClient"`
+	Kafka      KafkaConfig   `yaml:"kafka"`
+	Segment    SegmentConfig `yaml:"segment"`
 }
 
 func LoadConfig(path string) (*Config, error) {
