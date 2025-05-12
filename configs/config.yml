@@ -1,13 +1,13 @@
 http:
-  host: "0.0.0.0"
-  port: "8090"
+  host: "172.20.10.2"
+  port: "8000"
   readTimeout: "5s"
   writeTimeout: "5s"
   maxHeaderBytes: 1048576
 
 httpClient:
-  codeURL: "http://localhost:8000/api/code"
-  receiveURL: "http://localhost:3000/api/receive"
+  codeURL: "http://172.20.10.5:3050/api/code"
+  receiveURL: "http://172.20.10.2:8010/api/receive"
 
 kafka:
   producer:

@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	CodeURL    = "http://localhost:8000/api/code"
-	ReceiveURL = "http://localhost:3000/api/receive"
+	CodeURL         = "http://172.20.10.5:3050/api/code"
+	MarsReceiveURL  = "http://172.20.10.2:8010/receive"
+	EarthReceiveURL = "http://172.20.10.10:8001/receive"
 )
 
 func CodeSegment(body *entity.Segment) {
@@ -25,6 +26,8 @@ func CodeSegment(body *entity.Segment) {
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
+
+	fmt.Println(resp.Status)
 	if err != nil {
 		return
 	}
@@ -33,8 +36,12 @@ func CodeSegment(body *entity.Segment) {
 }
 
 func SendMessage(body entity.ReceiveRequest) {
-	reqBody, _ := json.Marshal(body)
+	var ReceiveURL = MarsReceiveURL
+	if body.Error != "" {
+		ReceiveURL = EarthReceiveURL
+	}
 
+	reqBody, _ := json.Marshal(body)
 	req, _ := http.NewRequest(http.MethodPost, ReceiveURL, bytes.NewBuffer(reqBody))
 
 	req.Header.Add("Content-Type", "application/json")

@@ -45,7 +45,6 @@ func (s *MessageService) AddSegment(segment *entity.Segment) {
 
 func (s *MessageService) SendCompletedMessages(sender func(body entity.ReceiveRequest)) {
 	messages := s.msgRepository.GetAllMessages()
-
 	for sendTime, message := range messages {
 		if message.Received < message.Total &&
 			time.Since(message.Last) <= s.cfg.AssemblyPeriod+time.Second {
