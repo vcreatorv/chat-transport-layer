@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	CodeURL         = "http://172.20.10.5:3050/api/code"
-	MarsReceiveURL  = "http://172.20.10.2:8010/receive"
-	EarthReceiveURL = "http://172.20.10.10:8001/receive"
+	CodeURL         = "http://192.168.204.34:3050/api/code"
+	MarsReceiveURL  = "http://192.168.204.224:8010/receive"
+	EarthReceiveURL = "http://192.168.204.153:8001/receive"
 )
 
 func CodeSegment(body *entity.Segment) {
@@ -27,7 +27,6 @@ func CodeSegment(body *entity.Segment) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 
-	fmt.Println(resp.Status)
 	if err != nil {
 		return
 	}

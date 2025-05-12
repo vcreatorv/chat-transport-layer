@@ -69,13 +69,14 @@ func (s *MessageService) SendCompletedMessages(sender func(body entity.ReceiveRe
 }
 
 func splitString(s string, maxSegmentSize int) []string {
+	runes := []rune(s)
 	var chunks []string
-	for i := 0; i < len(s); i += maxSegmentSize {
+	for i := 0; i < len(runes); i += maxSegmentSize {
 		end := i + maxSegmentSize
-		if end > len(s) {
-			end = len(s)
+		if end > len(runes) {
+			end = len(runes)
 		}
-		chunks = append(chunks, s[i:end])
+		chunks = append(chunks, string(runes[i:end]))
 	}
 	return chunks
 }
